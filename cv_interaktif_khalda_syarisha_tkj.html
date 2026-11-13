@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV & Portofolio - Khalda Syarisha | Teknik Komputer & Jaringan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans, Quicksand & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Quicksand"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        pastel: {
+                            bg: '#FFF0F5',
+                            card: '#FFFFFF',
+                            light: '#FFE4EC',
+                            soft: '#FFB6C1',
+                            medium: '#FF8DA1',
+                            accent: '#D84B78',
+                            dark: '#7A3E52',
+                            text: '#4A2C36',
+                            muted: '#8C6270'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Kustomisasi Scrollbar Lembut */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF0F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFB6C1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D84B78;
+        }
+
+        /* Animasi Melayang Halus untuk Avatar & Kartu */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float-slow {
+            animation: floatSlow 4s ease-in-out infinite;
+        }
+
+        /* Animasi Equalizer Musik */
+        @keyframes eqBounce {
+            0%, 100% { height: 4px; }
+            50% { height: 14px; }
+        }
+        .eq-bar {
+            width: 3px;
+            height: 4px;
+            background-color: #FFFFFF;
+            border-radius: 9999px;
+            transition: height 0.2s ease;
+        }
+        .playing .eq-bar:nth-child(1) { animation: eqBounce 0.6s ease-in-out infinite; }
+        .playing .eq-bar:nth-child(2) { animation: eqBounce 0.45s ease-in-out infinite 0.15s; }
+        .playing .eq-bar:nth-child(3) { animation: eqBounce 0.7s ease-in-out infinite 0.3s; }
+
+        /* Efek Kaca Pastel (Glassmorphism) */
+        .pastel-glass {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 182, 193, 0.55);
+        }
+
+        /* Pola Kabel Belang Putih-Warna untuk Simulasi RJ45 */
+        .wire-white-orange { background: repeating-linear-gradient(45deg, #FFFFFF, #FFFFFF 5px, #FB923C 5px, #FB923C 10px); }
+        .wire-orange { background-color: #F97316; }
+        .wire-white-green { background: repeating-linear-gradient(45deg, #FFFFFF, #FFFFFF 5px, #4ADE80 5px, #4ADE80 10px); }
+        .wire-blue { background-color: #3B82F6; }
+        .wire-white-blue { background: repeating-linear-gradient(45deg, #FFFFFF, #FFFFFF 5px, #60A5FA 5px, #60A5FA 10px); }
+        .wire-green { background-color: #22C55E; }
+        .wire-white-brown { background: repeating-linear-gradient(45deg, #FFFFFF, #FFFFFF 5px, #A16207 5px, #A16207 10px); }
+        .wire-brown { background-color: #78350F; }
+
+        /* Styling Khusus saat Dicetak / Simpan ke PDF */
+        @media print {
+            body {
+                background: #FFFFFF !important;
+                color: #2D1A21 !important;
+                font-size: 10.5pt;
+            }
+            #balloon-canvas,
+            #floating-controls,
+            #interactive-playground,
+            .no-print {
+                display: none !important;
+            }
+            .pastel-glass {
+                background: #FFFFFF !important;
+                box-shadow: none !important;
+                border: 1px solid #F3D1DC !important;
+                backdrop-filter: none !important;
+            }
+            main {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+                max-width: 100% !important;
+            }
+            .print-break-inside {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="bg-pastel-bg text-pastel-text font-sans antialiased selection:bg-pastel-soft selection:text-pastel-dark relative overflow-x-hidden">
+
+    <!-- Notifikasi Toast Halus (Pengganti alert) -->
+    <div id="toast-box" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-4 transition-all duration-300 no-print">
+        <div class="bg-white/95 border border-pastel-soft text-pastel-dark px-5 py-2.5 rounded-full shadow-lg shadow-pastel-soft/40 flex items-center gap-2 text-xs sm:text-sm font-semibold">
+            <span class="w-2.5 h-2.5 rounded-full bg-pastel-accent animate-pulse"></span>
+            <span id="toast-message">Pesan notifikasi</span>
+        </div>
+    </div>
+
+    <!-- Canvas Interaktif untuk Balon Pastel, Awan Kecil & Kilauan Bintang -->
+    <canvas id="balloon-canvas" class="fixed inset-0 w-full h-full pointer-events-auto z-0" title="Klik balon pastel untuk memecahkannya!"></canvas>
+
+    <!-- Kontrol Mengambang: Pemutar Musik Lucu & Counter Balon -->
+    <div id="floating-controls" class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2 no-print">
+        <!-- Badge Penghitung Balon Meletus -->
+        <div class="bg-white/95 border border-pastel-soft text-pastel-dark text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-md flex items-center gap-2">
+            <span>🎈 Balon Meletus:</span>
+            <span id="pop-counter" class="bg-pastel-accent text-white font-bold px-2 py-0.5 rounded-full text-[11px]">0</span>
+        </div>
+
+        <!-- Tooltip ajakan klik balon -->
+        <div id="balloon-hint" class="bg-white/90 border border-pastel-soft text-pastel-dark text-xs px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-1.5 transition-opacity duration-500">
+            <span>✨ Klik balon pastel di layar!</span>
+            <button onclick="document.getElementById('balloon-hint').style.display='none'" class="text-pastel-muted hover:text-pastel-accent font-bold ml-1">&times;</button>
+        </div>
+
+        <!-- Tombol Musik Instrumental Lucu (Web Audio API) -->
+        <button id="music-toggle-btn" onclick="toggleCuteMusic()" aria-label="Putar atau Jeda Musik Latar"
+            class="group flex items-center gap-3 bg-gradient-to-r from-pastel-accent to-[#F08CAE] hover:from-[#C23B67] hover:to-pastel-accent text-white px-4 py-3 rounded-full shadow-lg shadow-pastel-medium/40 transition-all duration-300 hover:scale-105 active:scale-95">
+            <div id="music-icon-wrapper" class="w-8 h-8 rounded-full bg-white/25 flex items-center justify-center gap-0.5">
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+                <span class="eq-bar"></span>
+            </div>
+            <div class="text-left pr-1">
+                <p id="music-status-title" class="text-xs font-bold leading-tight">Putar Musik Lucu</p>
+                <p id="music-status-sub" class="text-[10px] text-white/90 leading-tight">Melodi Kotak Musik</p>
+            </div>
+        </button>
+    </div>
+
+    <!-- Kontainer Utama CV -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pointer-events-none">
+        
+        <!-- Bagian 1: Header / Hero Section -->
+        <header class="pastel-glass rounded-3xl p-6 sm:p-10 shadow-xl shadow-pastel-soft/30 mb-8 pointer-events-auto print-break-inside relative overflow-hidden">
+            <!-- Dekorasi Sudut Pastel -->
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-pastel-light rounded-full opacity-70 pointer-events-none"></div>
+            <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-pastel-soft/40 rounded-full opacity-60 pointer-events-none"></div>
+
+            <div class="relative flex flex-col md:flex-row items-center md:items-start gap-6 sm:gap-8">
+                <!-- Ilustrasi Avatar Perempuan Berhijab & Tema Jaringan IT (SVG) -->
+                <div class="shrink-0 animate-float-slow">
+                    <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-gradient-to-tr from-pastel-soft via-pastel-light to-white p-1.5 shadow-md border-2 border-white">
+                        <svg viewBox="0 0 200 200" class="w-full h-full rounded-full bg-[#FFF0F5]" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Latar Belakang Jaringan Halus -->
+                            <circle cx="100" cy="100" r="95" fill="#FFE8F0"/>
+                            <circle cx="38" cy="55" r="5" fill="#FFACC7"/>
+                            <circle cx="162" cy="50" r="6" fill="#FFACC7"/>
+                            <circle cx="168" cy="135" r="4" fill="#E06D92"/>
+                            <line x1="38" y1="55" x2="70" y2="75" stroke="#FFACC7" stroke-width="2" stroke-dasharray="4 3"/>
+                            <line x1="162" y1="50" x2="130" y2="75" stroke="#FFACC7" stroke-width="2" stroke-dasharray="4 3"/>
+
+                            <!-- Badan / Blazer Pastel -->
+                            <path d="M45 195 C45 152, 155 152, 155 195 Z" fill="#E06D92"/>
+                            <path d="M72 155 L100 185 L128 155 Z" fill="#FFFFFF"/>
+                            <!-- Lanyard ID Card TKJ -->
+                            <path d="M82 155 L100 182 L118 155" fill="none" stroke="#FFD6E0" stroke-width="4"/>
+                            <rect x="93" y="178" width="14" height="16" rx="2" fill="#FFF8FA" stroke="#E06D92" stroke-width="1.5"/>
+
+                            <!-- Hijab Pastel Lembut -->
+                            <path d="M56 105 C56 52, 144 52, 144 105 C144 145, 132 168, 100 168 C68 168, 56 145, 56 105 Z" fill="#F497B6"/>
+                            <path d="M62 102 C62 58, 138 58, 138 102 C138 136, 125 158, 100 158 C75 158, 62 136, 62 102 Z" fill="#FFBDD3"/>
+
+                            <!-- Wajah -->
+                            <path d="M72 95 C72 72, 128 72, 128 95 C128 122, 116 138, 100 138 C84 138, 72 122, 72 95 Z" fill="#FFE6DC"/>
+
+                            <!-- Mata Ramah & Berbinar -->
+                            <circle cx="87" cy="100" r="4.2" fill="#4A2C36"/>
+                            <circle cx="113" cy="100" r="4.2" fill="#4A2C36"/>
+                            <circle cx="88.5" cy="98.5" r="1.4" fill="#FFFFFF"/>
+                            <circle cx="114.5" cy="98.5" r="1.4" fill="#FFFFFF"/>
+
+                            <!-- Alis & Pipi Merona -->
+                            <path d="M81 92 Q87 89 93 92" fill="none" stroke="#7A3E52" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M107 92 Q113 89 119 92" fill="none" stroke="#7A3E52" stroke-width="2" stroke-linecap="round"/>
+                            <ellipse cx="80" cy="110" rx="6" ry="3.5" fill="#FF9EBB" opacity="0.6"/>
+                            <ellipse cx="120" cy="110" rx="6" ry="3.5" fill="#FF9EBB" opacity="0.6"/>
+
+                            <!-- Senyum Manis -->
+                            <path d="M93 116 Q100 123 107 116" fill="none" stroke="#D45B82" stroke-width="2.5" stroke-linecap="round"/>
+
+                            <!-- Pin Wi-Fi Kecil di Hijab -->
+                            <circle cx="127" cy="84" r="9" fill="#FFFFFF" stroke="#E06D92" stroke-width="1.5"/>
+                            <path d="M123 85 A6 6 0 0 1 131 85" fill="none" stroke="#E06D92" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="127" cy="87.5" r="1.3" fill="#E06D92"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Informasi Utama Pelamar -->
+                <div class="flex-1 text-center md:text-left">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pastel-light text-pastel-accent text-xs font-bold tracking-wide uppercase mb-2.5">
+                        <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+                        <span>Siap Bekerja &bull; Lulusan TKJ</span>
+                    </div>
+                    
+                    <h1 class="font-display text-3xl sm:text-4xl font-bold text-pastel-dark tracking-tight mb-1.5">
+                        Khalda Syarisha
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg font-semibold text-pastel-accent mb-4">
+                        Teknik Komputer &amp; Jaringan (TKJ) &bull; Junior Network Engineer &amp; IT Support Specialist
+                    </p>
+
+                    <!-- Grid Kontak Cepat -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm text-pastel-muted mb-6">
+                        <div class="flex items-center justify-center md:justify-start gap-2">
+                            <span class="w-7 h-7 rounded-full bg-pastel-light text-pastel-accent flex items-center justify-center shrink-0">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <span>Bogor, Jawa Barat, Indonesia</span>
+                        </div>
+
+                        <div class="flex items-center justify-center md:justify-start gap-2">
+                            <span class="w-7 h-7 rounded-full bg-pastel-light text-pastel-accent flex items-center justify-center shrink-0">
+                                <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <a href="https://wa.me/62895320871489" target="_blank" rel="noopener noreferrer" class="hover:text-pastel-accent font-medium transition-colors">
+                                +62 895320871489
+                            </a>
+                        </div>
+
+                        <!-- Email Khalda Syarisha + Tombol Salin Cepat -->
+                        <div class="flex items-center justify-center md:justify-start gap-2">
+                            <span class="w-7 h-7 rounded-full bg-pastel-light text-pastel-accent flex items-center justify-center shrink-0">
+                                <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <a href="mailto:khldasyrsha@gmail.com" class="hover:text-pastel-accent font-medium transition-colors truncate">
+                                khldasyrsha@gmail.com
+                            </a>
+                            <button onclick="copyText('khldasyrsha@gmail.com', 'Email (khldasyrsha@gmail.com)')" title="Salin Email" class="no-print p-1 rounded-full hover:bg-pastel-light text-pastel-accent transition-colors">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+
+                        <!-- Tautan GitHub / Portofolio -->
+                        <div class="flex items-center justify-center md:justify-start gap-2">
+                            <span class="w-7 h-7 rounded-full bg-pastel-light text-pastel-accent flex items-center justify-center shrink-0">
+                                <i data-lucide="globe" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center gap-2">
+                                <a href="https://github.com/khldasyrsha" target="_blank" rel="noopener noreferrer" class="hover:text-pastel-accent underline decoration-pastel-soft underline-offset-2">GitHub</a>
+                                <span>&bull;</span>
+                                <a href="#interactive-playground" class="hover:text-pastel-accent underline decoration-pastel-soft underline-offset-2 no-print">Mini Lab TKJ ✨</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Aksi Utama -->
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5 no-print">
+                        <a href="https://wa.me/62895320871489?text=Halo%20Khalda%20Syarisha,%20saya%20tertarik%20dengan%20CV%20lamaran%20pekerjaan%20Anda." 
+                           target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center gap-2 bg-pastel-accent hover:bg-[#C23B67] text-white font-semibold text-sm px-4 py-2.5 rounded-full shadow-md shadow-pastel-medium/30 transition-all hover:-translate-y-0.5">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>WhatsApp</span>
+                        </a>
+
+                        <a href="mailto:khldasyrsha@gmail.com?subject=Undangan%20Interview%20-%20Khalda%20Syarisha" 
+                           class="inline-flex items-center gap-2 bg-white hover:bg-pastel-light text-pastel-dark border border-pastel-soft font-semibold text-sm px-4 py-2.5 rounded-full transition-all hover:-translate-y-0.5">
+                            <i data-lucide="send" class="w-4 h-4 text-pastel-accent"></i>
+                            <span>Kirim Email</span>
+                        </a>
+
+                        <button onclick="copyText('khldasyrsha@gmail.com', 'Email (khldasyrsha@gmail.com)')" 
+                                class="inline-flex items-center gap-2 bg-white hover:bg-pastel-light text-pastel-dark border border-pastel-soft font-semibold text-sm px-4 py-2.5 rounded-full transition-all hover:-translate-y-0.5">
+                            <i data-lucide="copy" class="w-4 h-4 text-pastel-accent"></i>
+                            <span>Salin Email</span>
+                        </button>
+
+                        <button onclick="window.print()" 
+                                class="inline-flex items-center gap-2 bg-pastel-light hover:bg-pastel-soft text-pastel-dark font-semibold text-sm px-4 py-2.5 rounded-full transition-all hover:-translate-y-0.5">
+                            <i data-lucide="printer" class="w-4 h-4 text-pastel-accent"></i>
+                            <span>Cetak / PDF</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Bagian 2: Tentang Saya (Profil Singkat) -->
+        <section class="pastel-glass rounded-3xl p-6 sm:p-8 shadow-lg shadow-pastel-soft/20 mb-8 pointer-events-auto print-break-inside">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center">
+                    <i data-lucide="user-check" class="w-5 h-5"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold text-pastel-dark">Tentang Saya</h2>
+            </div>
+            <p class="text-pastel-text leading-relaxed text-sm sm:text-base">
+                Saya adalah lulusan <strong class="text-pastel-dark font-semibold">Teknik Komputer dan Jaringan (TKJ)</strong> yang teliti, cekatan, dan memiliki antusiasme tinggi di bidang infrastruktur jaringan serta dukungan teknis (IT Support). Terbiasa melakukan instalasi dan konfigurasi perangkat jaringan seperti <span class="text-pastel-accent font-medium">MikroTik RouterOS</span>, perakitan serta perawatan komputer, crimping kabel LAN, hingga troubleshooting sistem operasi Windows maupun Linux. Saya senang mempelajari teknologi baru, mampu bekerja secara mandiri maupun dalam tim, dan berkomitmen memberikan solusi teknis yang rapi serta efisien.
+            </p>
+        </section>
+
+        <!-- Bagian 3: Keahlian Teknis (Hard Skills) & Soft Skills -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 pointer-events-auto">
+            <!-- Kartu 1: Jaringan & Infrastruktur -->
+            <div class="pastel-glass rounded-3xl p-6 shadow-lg shadow-pastel-soft/20 print-break-inside flex flex-col">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center shrink-0">
+                        <i data-lucide="network" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display text-lg font-bold text-pastel-dark leading-snug">Jaringan &amp; Infrastruktur</h3>
+                </div>
+                <div class="space-y-3 text-sm text-pastel-text flex-1">
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span>MikroTik RouterOS &amp; Hotspot</span>
+                            <span class="text-pastel-accent">90%</span>
+                        </div>
+                        <div class="w-full h-2 bg-pastel-light rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-pastel-medium to-pastel-accent rounded-full" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span>Crimping LAN &amp; Fiber Optic Dasar</span>
+                            <span class="text-pastel-accent">95%</span>
+                        </div>
+                        <div class="w-full h-2 bg-pastel-light rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-pastel-medium to-pastel-accent rounded-full" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span>Cisco Packet Tracer &amp; Subnetting</span>
+                            <span class="text-pastel-accent">85%</span>
+                        </div>
+                        <div class="w-full h-2 bg-pastel-light rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-pastel-medium to-pastel-accent rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-pastel-muted pt-1">
+                        TCP/IP, DHCP, VLAN dasar, serta instalasi &amp; konfigurasi Access Point Wi-Fi.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kartu 2: Sistem & Hardware -->
+            <div class="pastel-glass rounded-3xl p-6 shadow-lg shadow-pastel-soft/20 print-break-inside flex flex-col">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center shrink-0">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display text-lg font-bold text-pastel-dark leading-snug">Sistem &amp; Hardware</h3>
+                </div>
+                <div class="space-y-3 text-sm text-pastel-text flex-1">
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span>Perakitan &amp; Troubleshooting PC</span>
+                            <span class="text-pastel-accent">92%</span>
+                        </div>
+                        <div class="w-full h-2 bg-pastel-light rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-pastel-medium to-pastel-accent rounded-full" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span>Instalasi OS Windows &amp; Linux</span>
+                            <span class="text-pastel-accent">88%</span>
+                        </div>
+                        <div class="w-full h-2 bg-pastel-light rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-pastel-medium to-pastel-accent rounded-full" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span>Linux Debian Server Dasar</span>
+                            <span class="text-pastel-accent">80%</span>
+                        </div>
+                        <div class="w-full h-2 bg-pastel-light rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-pastel-medium to-pastel-accent rounded-full" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-pastel-muted pt-1">
+                        DNS, Web Server, File Sharing, dan perawatan rutin perangkat periferal kantor.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kartu 3: Soft Skills -->
+            <div class="pastel-glass rounded-3xl p-6 shadow-lg shadow-pastel-soft/20 print-break-inside flex flex-col">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center shrink-0">
+                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display text-lg font-bold text-pastel-dark leading-snug">Soft Skills</h3>
+                </div>
+                <div class="flex flex-wrap gap-2 content-start flex-1">
+                    <span class="px-3.5 py-2 rounded-2xl bg-pastel-light/80 text-pastel-dark text-xs font-semibold border border-pastel-soft">
+                        🔍 Troubleshooting Cekatan
+                    </span>
+                    <span class="px-3.5 py-2 rounded-2xl bg-pastel-light/80 text-pastel-dark text-xs font-semibold border border-pastel-soft">
+                        🤝 Kerja Sama Tim
+                    </span>
+                    <span class="px-3.5 py-2 rounded-2xl bg-pastel-light/80 text-pastel-dark text-xs font-semibold border border-pastel-soft">
+                        💬 Komunikasi Ramah
+                    </span>
+                    <span class="px-3.5 py-2 rounded-2xl bg-pastel-light/80 text-pastel-dark text-xs font-semibold border border-pastel-soft">
+                        ⚡ Cepat Belajar
+                    </span>
+                    <span class="px-3.5 py-2 rounded-2xl bg-pastel-light/80 text-pastel-dark text-xs font-semibold border border-pastel-soft">
+                        📋 Teliti &amp; Rapi
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian Baru: Mini Lab Interaktif TKJ (Ping Terminal & Simulasi Kabel RJ45) -->
+        <section id="interactive-playground" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 pointer-events-auto no-print">
+            <!-- Fitur 1: Cute Pink Terminal "Ping Khalda" -->
+            <div class="pastel-glass rounded-3xl p-6 shadow-lg shadow-pastel-soft/25 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center">
+                                <i data-lucide="terminal" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display text-base font-bold text-pastel-dark">Terminal Lucu: Ping Khalda</h3>
+                                <p class="text-[11px] text-pastel-muted">Klik perintah di bawah untuk berinteraksi</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#FF8DA1]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#FFD166]"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#06D6A0]"></span>
+                        </div>
+                    </div>
+
+                    <!-- Layar Terminal Pastel -->
+                    <div id="terminal-output" class="bg-[#381E27] text-[#FFE4EC] font-mono text-xs rounded-2xl p-4 h-40 overflow-y-auto space-y-1.5 mb-3 shadow-inner">
+                        <p class="text-[#FF8DA1]">khalda@bogor-tkj:~$ <span class="text-white">welcome --guest</span></p>
+                        <p class="text-pink-200/90">Halo HRD &amp; Pengunjung! 👋 Sistem jaringan Khalda siap menerima tugas baru.</p>
+                        <p class="text-emerald-300">Status: Online &amp; Siap Interview ✨</p>
+                    </div>
+                </div>
+
+                <!-- Tombol Perintah Cepat -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="runTerminalCmd('ping')" class="px-3 py-1.5 rounded-xl bg-pastel-light hover:bg-pastel-soft text-pastel-dark font-mono text-xs font-semibold transition-colors">
+                        $ ping khalda
+                    </button>
+                    <button onclick="runTerminalCmd('skills')" class="px-3 py-1.5 rounded-xl bg-pastel-light hover:bg-pastel-soft text-pastel-dark font-mono text-xs font-semibold transition-colors">
+                        $ skills --list
+                    </button>
+                    <button onclick="runTerminalCmd('hire')" class="px-3 py-1.5 rounded-xl bg-pastel-accent hover:bg-[#C23B67] text-white font-mono text-xs font-semibold transition-colors">
+                        $ hire --me 💖
+                    </button>
+                </div>
+            </div>
+
+            <!-- Fitur 2: Mini Simulasi Crimping Kabel LAN (RJ45 T568B) -->
+            <div class="pastel-glass rounded-3xl p-6 shadow-lg shadow-pastel-soft/25 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center">
+                                <i data-lucide="cable" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display text-base font-bold text-pastel-dark">Mini Tes Kabel LAN (T568B)</h3>
+                                <p class="text-[11px] text-pastel-muted">Klik pin kabel untuk menyambung, lalu uji koneksi!</p>
+                            </div>
+                        </div>
+                        <!-- Indikator LED LAN Tester -->
+                        <div class="flex items-center gap-1.5 bg-pastel-light px-2.5 py-1 rounded-full">
+                            <span id="lan-led" class="w-2.5 h-2.5 rounded-full bg-pastel-medium transition-all"></span>
+                            <span id="lan-status-badge" class="text-[10px] font-bold text-pastel-dark">Standby</span>
+                        </div>
+                    </div>
+
+                    <!-- Visualisasi Konektor RJ45 8 Pin -->
+                    <div class="bg-pastel-light/60 border border-pastel-soft rounded-2xl p-3.5 mb-3">
+                        <div class="grid grid-cols-8 gap-1.5 text-center" id="rj45-pins-container">
+                            <!-- Diisi otomatis via JavaScript -->
+                        </div>
+                        <p id="lan-feedback" class="text-center text-xs font-medium text-pastel-muted mt-3">
+                            Semua 8 pin standar T568B terpasang rapi. Coba klik "Test Koneksi LAN"!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-2">
+                    <button onclick="resetLanPins()" class="px-3.5 py-2 rounded-xl bg-white hover:bg-pastel-light border border-pastel-soft text-pastel-dark text-xs font-semibold transition-colors">
+                        Pasang Semua Pin
+                    </button>
+                    <button onclick="testLanConnection()" class="flex-1 inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-pastel-accent to-[#F08CAE] hover:opacity-95 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-sm transition-all active:scale-95">
+                        <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                        <span>Test Koneksi LAN</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian 4: Pengalaman & Proyek TKJ -->
+        <section class="pastel-glass rounded-3xl p-6 sm:p-8 shadow-lg shadow-pastel-soft/20 mb-8 pointer-events-auto print-break-inside">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center">
+                        <i data-lucide="briefcase" class="w-5 h-5"></i>
+                    </div>
+                    <h2 class="font-display text-xl sm:text-2xl font-bold text-pastel-dark">Pengalaman &amp; Proyek Praktik</h2>
+                </div>
+                <span class="text-xs text-pastel-muted bg-pastel-light px-3 py-1 rounded-full no-print">
+                    *Detail tempat &amp; tahun dapat disesuaikan
+                </span>
+            </div>
+
+            <div class="space-y-6 relative before:absolute before:inset-y-2 before:left-3.5 before:w-0.5 before:bg-pastel-soft">
+                <!-- Item Pengalaman 1: PKL -->
+                <div class="relative pl-10">
+                    <span class="absolute left-1.5 top-1.5 w-4 h-4 rounded-full bg-pastel-accent ring-4 ring-pastel-light"></span>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1.5">
+                        <h3 class="font-bold text-base sm:text-lg text-pastel-dark">Praktik Kerja Lapangan (PKL) — Teknisi Jaringan &amp; IT Support</h3>
+                        <span class="inline-block text-xs font-semibold text-pastel-accent bg-pastel-light px-3 py-1 rounded-full w-fit">
+                            Periode PKL &bull; Bogor, Jawa Barat
+                        </span>
+                    </div>
+                    <p class="text-xs font-medium text-pastel-muted mb-2.5">Instansi / Perusahaan Mitra IT &amp; Layanan Internet (Bogor)</p>
+                    <ul class="list-disc list-inside space-y-1.5 text-sm text-pastel-text">
+                        <li>Membantu pemasangan kabel jaringan LAN (crimping konektor RJ45 &amp; penarikan kabel UTP) untuk kebutuhan ruang kerja klien.</li>
+                        <li>Melakukan pengecekan konektivitas jaringan, konfigurasi dasar router/access point, serta troubleshooting gangguan internet ringan.</li>
+                        <li>Menangani instalasi ulang sistem operasi Windows, aplikasi standar kantor, serta perawatan rutin perangkat komputer dan printer.</li>
+                    </ul>
+                </div>
+
+                <!-- Item Pengalaman 2: Proyek Akhir Sekolah -->
+                <div class="relative pl-10">
+                    <span class="absolute left-1.5 top-1.5 w-4 h-4 rounded-full bg-pastel-medium ring-4 ring-pastel-light"></span>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1.5">
+                        <h3 class="font-bold text-base sm:text-lg text-pastel-dark">Proyek Akhir Sekolah — Rancang Bangun Hotspot &amp; Manajemen Bandwidth</h3>
+                        <span class="inline-block text-xs font-semibold text-pastel-accent bg-pastel-light px-3 py-1 rounded-full w-fit">
+                            Uji Kompetensi Keahlian (UKK)
+                        </span>
+                    </div>
+                    <p class="text-xs font-medium text-pastel-muted mb-2.5">Laboratorium Teknik Komputer &amp; Jaringan</p>
+                    <ul class="list-disc list-inside space-y-1.5 text-sm text-pastel-text">
+                        <li>Membangun topologi jaringan lokal dan nirkabel menggunakan router MikroTik serta Access Point.</li>
+                        <li>Mengatur pembagian alamat IP otomatis (DHCP Server), halaman login Hotspot pengguna, serta pembatasan kecepatan (Simple Queue) agar koneksi merata.</li>
+                        <li>Menerapkan aturan Firewall dasar untuk memblokir situs tertentu dan menjaga keamanan jaringan lokal.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian 5 & 6: Pendidikan & Sertifikasi (2 Kolom) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 pointer-events-auto">
+            <!-- Pendidikan -->
+            <section class="pastel-glass rounded-3xl p-6 sm:p-7 shadow-lg shadow-pastel-soft/20 print-break-inside">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center">
+                        <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                    </div>
+                    <h2 class="font-display text-xl font-bold text-pastel-dark">Pendidikan</h2>
+                </div>
+
+                <div class="bg-pastel-light/50 rounded-2xl p-4 border border-pastel-soft/60">
+                    <span class="inline-block text-xs font-bold text-pastel-accent mb-1">Lulusan SMK &bull; Jurusan TKJ</span>
+                    <h3 class="font-bold text-base text-pastel-dark">Sekolah Menengah Kejuruan (SMK)</h3>
+                    <p class="text-sm font-medium text-pastel-text mt-0.5">Kompetensi Keahlian: Teknik Komputer dan Jaringan</p>
+                    <p class="text-xs text-pastel-muted mt-2 flex items-center gap-1.5">
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-pastel-accent"></i>
+                        <span>Bogor, Jawa Barat</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Sertifikasi & Pencapaian -->
+            <section class="pastel-glass rounded-3xl p-6 sm:p-7 shadow-lg shadow-pastel-soft/20 print-break-inside">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-2xl bg-pastel-light text-pastel-accent flex items-center justify-center">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                    </div>
+                    <h2 class="font-display text-xl font-bold text-pastel-dark">Sertifikasi &amp; Pelatihan</h2>
+                </div>
+
+                <ul class="space-y-3 text-sm">
+                    <li class="bg-pastel-light/50 rounded-2xl p-3.5 border border-pastel-soft/60 flex items-start gap-3">
+                        <i data-lucide="badge-check" class="w-5 h-5 text-pastel-accent shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="font-bold text-pastel-dark">Sertifikat Uji Kompetensi Keahlian (UKK) TKJ</p>
+                            <p class="text-xs text-pastel-muted mt-0.5">Instalasi Jaringan Lokal, Konfigurasi Router &amp; Administrasi Server</p>
+                        </div>
+                    </li>
+                    <li class="bg-pastel-light/50 rounded-2xl p-3.5 border border-pastel-soft/60 flex items-start gap-3">
+                        <i data-lucide="badge-check" class="w-5 h-5 text-pastel-accent shrink-0 mt-0.5"></i>
+                        <div>
+                            <p class="font-bold text-pastel-dark">Pelatihan Dasar Jaringan &amp; MikroTik (MTCNA Basic)</p>
+                            <p class="text-xs text-pastel-muted mt-0.5">Routing Dasar, Manajemen Bandwidth &amp; Keamanan Jaringan</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- Bagian 7: Footer -->
+        <footer class="text-center text-xs sm:text-sm text-pastel-muted pb-6 pointer-events-auto">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-pastel-soft/50">
+                <span>Dibuat dengan penuh semangat oleh <strong class="text-pastel-dark">Khalda Syarisha</strong></span>
+                <span>&bull;</span>
+                <span>Bogor, Jawa Barat</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // Inisialisasi ikon Lucide
+        lucide.createIcons();
+
+        // Fungsi Menampilkan Notifikasi Toast Halus
+        function showToast(message) {
+            const toastBox = document.getElementById('toast-box');
+            const toastMsg = document.getElementById('toast-message');
+            if (!toastBox || !toastMsg) return;
+
+            toastMsg.textContent = message;
+            toastBox.classList.remove('opacity-0', '-translate-y-4');
+            toastBox.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toastBox.classList.remove('opacity-100', 'translate-y-0');
+                toastBox.classList.add('opacity-0', '-translate-y-4');
+            }, 2600);
+        }
+
+        // Fungsi Salin Teks (Nomor / Email) ke Clipboard
+        function copyText(textValue, labelName) {
+            const tempInput = document.createElement("input");
+            tempInput.value = textValue;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand("copy");
+                showToast(labelName + " berhasil disalin!");
+            } catch (err) {
+                showToast(labelName + ": " + textValue);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // ==========================================
+        // FITUR INTERAKTIF 1: TERMINAL LUCU "PING KHALDA"
+        // ==========================================
+        function runTerminalCmd(cmd) {
+            const term = document.getElementById('terminal-output');
+            let commandLine = '';
+            let responseLines = [];
+
+            if (cmd === 'ping') {
+                commandLine = 'ping khalda -c 3';
+                responseLines = [
+                    'Reply from Khalda-Syarisha (Bogor): time=1ms TTL=128 🚀',
+                    'Respons cepat, ramah, dan siap membantu tim IT!'
+                ];
+            } else if (cmd === 'skills') {
+                commandLine = 'skills --list';
+                responseLines = [
+                    '[✓] MikroTik RouterOS & Hotspot Management',
+                    '[✓] Crimping RJ45, LAN Setup & Troubleshooting',
+                    '[✓] Windows, Linux Debian & PC Maintenance'
+                ];
+            } else if (cmd === 'hire') {
+                commandLine = 'hire --me --now';
+                responseLines = [
+                    '💖 Terima kasih! Menghubungkan ke WhatsApp & Email...',
+                    'Email: khldasyrsha@gmail.com | WA: +62 895320871489'
+                ];
+                spawnPopParticles(width / 2, height / 2, '#FF8DA1');
+                playPopSound();
+            }
+
+            const pCmd = document.createElement('p');
+            pCmd.className = 'text-[#FF8DA1] mt-2';
+            pCmd.innerHTML = `khalda@bogor-tkj:~$ <span class="text-white">${commandLine}</span>`;
+            term.appendChild(pCmd);
+
+            responseLines.forEach(line => {
+                const pRes = document.createElement('p');
+                pRes.className = 'text-emerald-300';
+                pRes.textContent = line;
+                term.appendChild(pRes);
+            });
+
+            term.scrollTop = term.scrollHeight;
+        }
+
+        // ==========================================
+        // FITUR INTERAKTIF 2: SIMULASI KABEL LAN RJ45 (T568B)
+        // ==========================================
+        const t568bPins = [
+            { num: 1, name: 'P-Oranye', css: 'wire-white-orange', connected: true },
+            { num: 2, name: 'Oranye', css: 'wire-orange', connected: true },
+            { num: 3, name: 'P-Hijau', css: 'wire-white-green', connected: true },
+            { num: 4, name: 'Biru', css: 'wire-blue', connected: true },
+            { num: 5, name: 'P-Biru', css: 'wire-white-blue', connected: true },
+            { num: 6, name: 'Hijau', css: 'wire-green', connected: true },
+            { num: 7, name: 'P-Cokelat', css: 'wire-white-brown', connected: true },
+            { num: 8, name: 'Cokelat', css: 'wire-brown', connected: true }
+        ];
+
+        function renderLanPins() {
+            const container = document.getElementById('rj45-pins-container');
+            container.innerHTML = '';
+
+            t568bPins.forEach((pin, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.onclick = () => {
+                    t568bPins[idx].connected = !t568bPins[idx].connected;
+                    renderLanPins();
+                };
+                btn.title = `Pin ${pin.num}: ${pin.name} (Klik untuk lepas/pasang)`;
+                btn.className = 'flex flex-col items-center group focus:outline-none';
+
+                btn.innerHTML = `
+                    <span class="text-[10px] font-bold text-pastel-dark mb-1">${pin.num}</span>
+                    <div class="w-4 sm:w-5 h-12 rounded-md border border-pastel-dark/20 shadow-sm transition-all duration-200 ${pin.css} ${pin.connected ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-35'}"></div>
+                    <span class="text-[8px] text-pastel-muted mt-1 truncate max-w-full">${pin.name}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function resetLanPins() {
+            t568bPins.forEach(p => p.connected = true);
+            renderLanPins();
+            document.getElementById('lan-led').className = 'w-2.5 h-2.5 rounded-full bg-pastel-medium';
+            document.getElementById('lan-status-badge').textContent = 'Siap Tes';
+            document.getElementById('lan-feedback').textContent = 'Semua 8 pin T568B terpasang rapi!';
+        }
+
+        function testLanConnection() {
+            const allConnected = t568bPins.every(p => p.connected);
+            const led = document.getElementById('lan-led');
+            const badge = document.getElementById('lan-status-badge');
+            const feedback = document.getElementById('lan-feedback');
+
+            if (allConnected) {
+                led.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10B981]';
+                badge.textContent = '1000 Mbps';
+                feedback.innerHTML = '<span class="text-emerald-600 font-bold">✅ Connected! Urutan T568B Sempurna (1-8 OK)</span>';
+                playPopSound();
+                spawnPopParticles(width * 0.65, height * 0.65, '#34D399');
+                showToast('🎉 Tes LAN Berhasil: Connected 1000 Mbps!');
+            } else {
+                const missing = t568bPins.filter(p => !p.connected).map(p => p.num).join(', ');
+                led.className = 'w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping';
+                badge.textContent = 'Putus';
+                feedback.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Pin ${missing} belum terpasang! Klik "Pasang Semua Pin".</span>`;
+                showToast(`⚠️ Pin nomor ${missing} terlepas!`);
+            }
+        }
+
+        // Render awal simulasi kabel LAN
+        renderLanPins();
+
+        // ==========================================
+        // 3. PEMUTAR MUSIK INSTRUMENTAL LUCU (WEB AUDIO API)
+        // ==========================================
+        let audioCtx = null;
+        let isPlayingMusic = false;
+        let melodyTimer = null;
+        let currentNoteIndex = 0;
+        let poppedCount = 0;
+
+        // Melodi ceria ala kotak musik (Music Box)
+        const cuteMelodyNotes = [
+            { freq: 523.25, dur: 0.25 }, // C5
+            { freq: 659.25, dur: 0.25 }, // E5
+            { freq: 783.99, dur: 0.25 }, // G5
+            { freq: 1046.50, dur: 0.45 }, // C6
+            { freq: 880.00, dur: 0.25 }, // A5
+            { freq: 783.99, dur: 0.25 }, // G5
+            { freq: 659.25, dur: 0.45 }, // E5
+            { freq: 587.33, dur: 0.25 }, // D5
+            { freq: 659.25, dur: 0.25 }, // E5
+            { freq: 783.99, dur: 0.25 }, // G5
+            { freq: 659.25, dur: 0.25 }, // E5
+            { freq: 587.33, dur: 0.50 }, // D5
+            { freq: 523.25, dur: 0.25 }, // C5
+            { freq: 659.25, dur: 0.25 }, // E5
+            { freq: 783.99, dur: 0.25 }, // G5
+            { freq: 1046.50, dur: 0.45 }, // C6
+            { freq: 987.77, dur: 0.25 }, // B5
+            { freq: 880.00, dur: 0.25 }, // A5
+            { freq: 783.99, dur: 0.45 }, // G5
+            { freq: 659.25, dur: 0.25 }, // E5
+            { freq: 587.33, dur: 0.25 }, // D5
+            { freq: 523.25, dur: 0.65 }  // C5
+        ];
+
+        function playMusicBoxNote(freq, duration) {
+            if (!audioCtx) return;
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+
+                // Envelope lembut menyerupai denting kotak musik
+                gainNode.gain.setValueAtTime(0.001, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration + 0.35);
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + duration + 0.4);
+            } catch (e) {
+                // Abaikan jika audio context belum diizinkan browser
+            }
+        }
+
+        function scheduleNextNote() {
+            if (!isPlayingMusic) return;
+            const note = cuteMelodyNotes[currentNoteIndex];
+            playMusicBoxNote(note.freq, note.dur);
+            currentNoteIndex = (currentNoteIndex + 1) % cuteMelodyNotes.length;
+            melodyTimer = setTimeout(scheduleNextNote, note.dur * 1000 + 70);
+        }
+
+        // Efek suara "Pop!" lucu saat balon dipecahkan
+        function playPopSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, now);
+                osc.frequency.exponentialRampToValueAtTime(780, now + 0.08);
+
+                gain.gain.setValueAtTime(0.09, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } catch (e) {
+                // Abaikan jika browser memblokir audio otomatis
+            }
+        }
+
+        function toggleCuteMusic() {
+            const btnTitle = document.getElementById('music-status-title');
+            const btnSub = document.getElementById('music-status-sub');
+            const iconWrapper = document.getElementById('music-icon-wrapper');
+
+            if (!isPlayingMusic) {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                isPlayingMusic = true;
+                scheduleNextNote();
+
+                btnTitle.textContent = "Jeda Musik";
+                btnSub.textContent = "Sedang diputar ♪";
+                iconWrapper.classList.add('playing');
+                showToast("🎵 Memutar melodi kotak musik pastel...");
+            } else {
+                isPlayingMusic = false;
+                clearTimeout(melodyTimer);
+
+                btnTitle.textContent = "Putar Musik Lucu";
+                btnSub.textContent = "Melodi Kotak Musik";
+                iconWrapper.classList.remove('playing');
+                showToast("⏸️ Musik dijeda");
+            }
+        }
+
+        // ==========================================
+        // 2. ANIMASI BALON PASTEL, AWAN & SPARKLES (HTML5 CANVAS)
+        // ==========================================
+        const canvas = document.getElementById('balloon-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const pastelPalette = [
+            '#FFB6C1', // Pastel Pink
+            '#FFD6E0', // Blush Pink
+            '#FFDAC1', // Pastel Peach
+            '#E2D1F9', // Soft Lavender
+            '#FF8DA1', // Rose Pastel
+            '#FFE5EC'  // Creamy Pink
+        ];
+
+        let balloons = [];
+        let sparkles = [];
+        let clouds = [];
+        let popParticles = [];
+
+        // Inisialisasi Awan Kecil Lembut
+        for (let i = 0; i < 5; i++) {
+            clouds.push({
+                x: Math.random() * width,
+                y: Math.random() * (height * 0.6),
+                speed: 0.15 + Math.random() * 0.2,
+                scale: 0.6 + Math.random() * 0.5
+            });
+        }
+
+        // Inisialisasi Kilauan Bintang (Sparkles)
+        for (let i = 0; i < 28; i++) {
+            sparkles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                size: 2 + Math.random() * 4,
+                speedY: 0.2 + Math.random() * 0.4,
+                alpha: Math.random(),
+                alphaSpeed: 0.01 + Math.random() * 0.02
+            });
+        }
+
+        function createBalloon(startAtBottom = false) {
+            const radius = 18 + Math.random() * 18;
+            return {
+                x: Math.random() * width,
+                y: startAtBottom ? height + radius + 30 : Math.random() * height,
+                radius: radius,
+                color: pastelPalette[Math.floor(Math.random() * pastelPalette.length)],
+                speedY: 0.45 + Math.random() * 0.65,
+                wobbleOffset: Math.random() * Math.PI * 2,
+                wobbleSpeed: 0.015 + Math.random() * 0.015
+            };
+        }
+
+        // Buat balon awal sesuai lebar layar (lebih ringan di HP)
+        const balloonCount = width < 640 ? 10 : 16;
+        for (let i = 0; i < balloonCount; i++) {
+            balloons.push(createBalloon(false));
+        }
+
+        // Efek ledakan konfeti pastel saat balon diklik
+        function spawnPopParticles(x, y, color) {
+            for (let i = 0; i < 14; i++) {
+                const angle = (Math.PI * 2 * i) / 14;
+                const speed = 1.5 + Math.random() * 3;
+                popParticles.push({
+                    x: x,
+                    y: y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    radius: 3 + Math.random() * 3,
+                    color: color,
+                    alpha: 1
+                });
+            }
+        }
+
+        // Interaksi Klik / Sentuh untuk Memecahkan Balon
+        function handleCanvasInteraction(clientX, clientY) {
+            for (let i = balloons.length - 1; i >= 0; i--) {
+                const b = balloons[i];
+                const dx = clientX - b.x;
+                const dy = clientY - b.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist <= b.radius + 10) {
+                    spawnPopParticles(b.x, b.y, b.color);
+                    playPopSound();
+                    balloons.splice(i, 1);
+                    balloons.push(createBalloon(true));
+                    poppedCount++;
+                    document.getElementById('pop-counter').textContent = poppedCount;
+                    break;
+                }
+            }
+        }
+
+        canvas.addEventListener('click', (e) => {
+            handleCanvasInteraction(e.clientX, e.clientY);
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 0) {
+                handleCanvasInteraction(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
+
+        // Gambar Awan Lembut
+        function drawCloud(c) {
+            ctx.save();
+            ctx.translate(c.x, c.y);
+            ctx.scale(c.scale, c.scale);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+            ctx.beginPath();
+            ctx.arc(0, 0, 22, 0, Math.PI * 2);
+            ctx.arc(20, -6, 26, 0, Math.PI * 2);
+            ctx.arc(42, 0, 20, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Gambar Balon dengan Tali Melengkung & Kilau Cahaya
+        function drawBalloon(b) {
+            ctx.save();
+            ctx.translate(b.x, b.y);
+
+            // Tali balon bergoyang lembut
+            ctx.beginPath();
+            ctx.moveTo(0, b.radius * 1.15);
+            ctx.quadraticCurveTo(
+                Math.sin(b.wobbleOffset * 1.5) * 8,
+                b.radius * 1.15 + 18,
+                0,
+                b.radius * 1.15 + 36
+            );
+            ctx.strokeStyle = 'rgba(224, 109, 146, 0.35)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Badan balon (sedikit oval)
+            ctx.beginPath();
+            ctx.ellipse(0, 0, b.radius * 0.92, b.radius * 1.12, 0, 0, Math.PI * 2);
+            ctx.fillStyle = b.color;
+            ctx.fill();
+
+            // Simpul kecil di bawah balon
+            ctx.beginPath();
+            ctx.moveTo(-4, b.radius * 1.1);
+            ctx.lineTo(4, b.radius * 1.1);
+            ctx.lineTo(0, b.radius * 1.22);
+            ctx.closePath();
+            ctx.fillStyle = b.color;
+            ctx.fill();
+
+            // Kilauan cahaya putih lucu pada balon
+            ctx.beginPath();
+            ctx.ellipse(-b.radius * 0.32, -b.radius * 0.38, b.radius * 0.16, b.radius * 0.3, -0.4, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Gambar Bintang 4 Sisi (Sparkle)
+        function drawSparkle(s) {
+            ctx.save();
+            ctx.translate(s.x, s.y);
+            ctx.fillStyle = `rgba(224, 109, 146, ${s.alpha * 0.55})`;
+            ctx.beginPath();
+            ctx.moveTo(0, -s.size);
+            ctx.quadraticCurveTo(0, 0, s.size, 0);
+            ctx.quadraticCurveTo(0, 0, 0, s.size);
+            ctx.quadraticCurveTo(0, 0, -s.size, 0);
+            ctx.quadraticCurveTo(0, 0, 0, -s.size);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Loop Animasi Utama
+        function animateScene() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Update & gambar awan
+            clouds.forEach(c => {
+                c.x += c.speed;
+                if (c.x > width + 80) c.x = -80;
+                drawCloud(c);
+            });
+
+            // Update & gambar sparkles
+            sparkles.forEach(s => {
+                s.y -= s.speedY;
+                s.alpha += s.alphaSpeed;
+                if (s.alpha >= 1 || s.alpha <= 0.1) s.alphaSpeed *= -1;
+                if (s.y < -10) {
+                    s.y = height + 10;
+                    s.x = Math.random() * width;
+                }
+                drawSparkle(s);
+            });
+
+            // Update & gambar balon
+            balloons.forEach(b => {
+                b.y -= b.speedY;
+                b.wobbleOffset += b.wobbleSpeed;
+                b.x += Math.sin(b.wobbleOffset) * 0.45;
+
+                if (b.y < -b.radius * 2 - 40) {
+                    Object.assign(b, createBalloon(true));
+                }
+                drawBalloon(b);
+            });
+
+            // Update & gambar partikel ledakan balon
+            for (let i = popParticles.length - 1; i >= 0; i--) {
+                const p = popParticles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.035;
+
+                if (p.alpha <= 0) {
+                    popParticles.splice(i, 1);
+                } else {
+                    ctx.save();
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            requestAnimationFrame(animateScene);
+        }
+
+        window.onload = function () {
+            animateScene();
+        };
+    </script>
+</body>
+</html>
